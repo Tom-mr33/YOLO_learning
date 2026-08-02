@@ -1,0 +1,149 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyTorch
+*.pth
+*.pt
+*.ckpt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+data/
+runs/
+weights/
+*.onnx
+*.engine
+*.tflite
+*.pb
+*.torchscript
+*.mlmodel
+*.mlpackage
+*.openvino
+*.pdmodel
+*.pdiparams
+*.pdiparams.info
+*.ncnn
+*.param
+*.bin
+*.hef
+*.rknn
+*.wts
+*.uff
+*.trt
+*.plan
+*.cache
+*.npy
+*.npz
+*.log
+*.csv
+*.json
+!configs/**/*.json
+*.xml
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Ultralytics
+ultralytics/assets/
+*.yaml.bak
+
+# TensorBoard
+events.out.tfevents.*
+
+# Weights & Biases
+wandb/
+
+# ClearML
+.clearml/
+
+# Comet
+.comet.config
+
+# DVC
+.dvc/
+dvc.lock
+
+# Hydra
+outputs/
+multirun/
+
+# IDE
+.codebuddy/
+
+# Custom
+*.bak
+*.tmp
+*.temp
+*.old
+*.orig
+*.rej
+*.patch
+*.diff
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+*.swo
+*.swp
+*.swn
+*.swm
+*.swl
+*.swo
+*.swp
+*.swn
+*.swm
+*.swl

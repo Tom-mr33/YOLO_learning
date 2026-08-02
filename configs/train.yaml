@@ -1,0 +1,78 @@
+# YOLOv8 训练配置
+# 阶段一：环境搭建与基础实践
+
+# 模型配置
+model:
+  name: yolov8n.pt          # 预训练模型名称或路径
+  # 可选: yolov8n.pt, yolov8s.pt, yolov8m.pt, yolov8l.pt, yolov8x.pt
+
+# 数据配置
+data:
+  name: coco128.yaml        # 数据集配置文件路径
+  path: data/coco128        # 数据集根目录
+  train: images/train2017   # 训练集相对路径
+  val: images/val2017       # 验证集相对路径
+  test: null                # 测试集相对路径（可选）
+  nc: 80                    # 类别数量
+  names: []                 # 类别名称列表（留空则从文件读取）
+
+# 训练超参数
+train:
+  epochs: 50                # 训练轮数
+  batch: 16                 # 批次大小（根据 GPU 显存调整）
+  imgsz: 640                # 输入图片尺寸
+  lr0: 0.01                 # 初始学习率
+  lrf: 0.01                 # 最终学习率因子
+  momentum: 0.937           # SGD 动量
+  weight_decay: 0.0005      # 权重衰减
+  warmup_epochs: 3.0        # 预热轮数
+  warmup_momentum: 0.8      # 预热动量
+  box: 7.5                  # 框损失权重
+  cls: 0.5                  # 分类损失权重
+  dfl: 1.5                  # DFL 损失权重
+  label_smoothing: 0.0      # 标签平滑
+  nbs: 64                   # 标称批次大小
+  overlap_mask: true        # 掩码重叠
+  val: true                 # 训练期间验证
+  save: true                # 保存检查点
+  save_period: -1           # 保存周期（-1 表示只保存最佳）
+  cache: false              # 缓存图片（ram/disk/false）
+  device: 0                 # 训练设备（0 表示 GPU 0，cpu 表示 CPU）
+  workers: 8                # 数据加载线程数
+  project: runs/train       # 项目输出目录
+  name: exp                 # 实验名称
+  exist_ok: false           # 覆盖现有实验
+  pretrained: true          # 使用预训练权重
+  optimizer: SGD            # 优化器（SGD/Adam/AdamW）
+  verbose: true             # 详细输出
+  seed: 0                   # 随机种子
+  deterministic: true       # 确定性训练
+  single_cls: false         # 单类别训练
+  rect: false               # 矩形训练
+  cos_lr: false             # 余弦学习率
+  close_mosaic: 10          # 最后 N 轮关闭马赛克
+  resume: false             # 断点续训
+  amp: true                 # 混合精度训练
+  fraction: 1.0             # 数据集使用比例
+  profile: false            # 性能分析
+  freeze: null              # 冻结层数
+  multi_scale: false        # 多尺度训练
+  copy_paste: 0.0           # 复制粘贴增强概率
+  auto_augment: randaugment # 自动增强策略
+  erasing: 0.4              # 随机擦除概率
+  crop_fraction: 1.0        # 裁剪比例
+
+# 数据增强
+augment:
+  hsv_h: 0.015              # HSV 色调增强
+  hsv_s: 0.7                # HSV 饱和度增强
+  hsv_v: 0.4                # HSV 明度增强
+  degrees: 0.0              # 旋转角度
+  translate: 0.1            # 平移比例
+  scale: 0.5                # 缩放比例
+  shear: 0.0                # 剪切角度
+  perspective: 0.0          # 透视变换
+  flipud: 0.0               # 上下翻转概率
+  fliplr: 0.5               # 左右翻转概率
+  mosaic: 1.0               # 马赛克增强概率
+  mixup: 0.0                # MixUp 增强概率
