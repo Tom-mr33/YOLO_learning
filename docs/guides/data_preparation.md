@@ -253,5 +253,5 @@ visualize_label(
 
 ## 下一步
 
-- 查看 [快速开始](quickstart.md) 了解如何使用准备好的数据集进行训练
-- 查看 [API 文档](api_reference.md) 了解数据处理工具的详细使用说明
+- 查看 [快速开始](../getting-started/quickstart.md) 了解如何使用准备好的数据集进行训练
+- 查看 [API 文档](../api/api_reference.md) 了解数据处理工具的详细使用说明

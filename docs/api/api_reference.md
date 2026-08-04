@@ -547,6 +547,6 @@ python src/exporter.py --config configs/export.yaml [--weights WEIGHTS] [--forma
 
 ## 下一步
 
-- 查看 [快速开始](quickstart.md) 了解如何快速上手
-- 查看 [数据准备](data_preparation.md) 了解如何准备数据集
-- 查看 [学习路线](../plan/plan.md) 了解完整的学习路径
+- 查看 [快速开始](../getting-started/quickstart.md) 了解如何快速上手
+- 查看 [数据准备](../guides/data_preparation.md) 了解如何准备数据集
+- 查看 [学习路线](../../plan/plan.md) 了解完整的学习路径
