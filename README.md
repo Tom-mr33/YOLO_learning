@@ -142,10 +142,16 @@ YOLO_learning/
 │   └── export_example.py      # 导出示例
 │
 ├── docs/                      # 文档目录
-│   ├── installation.md        # 安装指南
-│   ├── quickstart.md          # 快速开始
-│   ├── data_preparation.md    # 数据准备
-│   └── api_reference.md       # API 文档
+│   ├── README.md              # 文档总索引（分类导航）
+│   ├── getting-started/       # 入门上手
+│   │   ├── installation.md    #   安装指南
+│   │   └── quickstart.md      #   快速开始
+│   ├── guides/                # 使用指南
+│   │   └── data_preparation.md#   数据准备
+│   ├── api/                   # 接口参考
+│   │   └── api_reference.md   #   API 文档
+│   └── theory/                # 理论学习
+│       └── yolo_theory.md     #   YOLOv8 理论知识
 │
 ├── tests/                     # 测试目录
 │   ├── test_trainer.py        # 训练器测试
@@ -167,10 +173,13 @@ YOLO_learning/
 
 ## 文档
 
-- [安装指南](docs/installation.md) - 详细的环境配置说明
-- [快速开始](docs/quickstart.md) - 5 分钟上手教程
-- [数据准备](docs/data_preparation.md) - 数据集格式和准备方法
-- [API 文档](docs/api_reference.md) - 核心模块使用说明
+详见 [文档中心](docs/README.md) 的按类导航，重点文档如下：
+
+- [安装指南](docs/getting-started/installation.md) - 详细的环境配置说明
+- [快速开始](docs/getting-started/quickstart.md) - 5 分钟上手教程
+- [数据准备](docs/guides/data_preparation.md) - 数据集格式和准备方法
+- [API 文档](docs/api/api_reference.md) - 核心模块使用说明
+- [YOLOv8 理论知识](docs/theory/yolo_theory.md) - 算法原理与公式推导
 - [学习路线](plan/plan.md) - 完整的 YOLO 学习路径
 
 ---
@@ -257,9 +266,3 @@ exporter.export_onnx(imgsz=640, half=False, dynamic=True)
 - 所有数据集提供者和开源贡献者
 
 ---
-
-<div align="center">
-
-**如果觉得有帮助，请给本项目点个 Star！**
-
-</div>

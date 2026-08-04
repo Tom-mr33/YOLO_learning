@@ -214,7 +214,7 @@ A: 尝试以下方法：
 
 ### Q: 如何使用自己的数据集？
 
-A: 请参考 [数据准备](data_preparation.md) 文档。
+A: 请参考 [数据准备](../guides/data_preparation.md) 文档。
 
 ### Q: 如何对比多个模型？
 
@@ -226,6 +226,6 @@ python examples/val_example.py --example 3
 
 ## 下一步
 
-- 查看 [数据准备](data_preparation.md) 了解如何准备自定义数据集
-- 查看 [API 文档](api_reference.md) 了解详细的 API 使用说明
-- 查看 [学习路线](../plan/plan.md) 了解完整的学习路径
+- 查看 [数据准备](../guides/data_preparation.md) 了解如何准备自定义数据集
+- 查看 [API 文档](../api/api_reference.md) 了解详细的 API 使用说明
+- 查看 [学习路线](../../plan/plan.md) 了解完整的学习路径

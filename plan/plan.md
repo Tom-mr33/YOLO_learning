@@ -320,9 +320,3 @@ model.export(format='openvino')
 - 所有数据集提供者和开源贡献者
 
 ---
-
-<div align="center">
-
-**如果觉得有帮助，请给本项目点个 Star！**
-
-</div>
