@@ -213,15 +213,19 @@ class YOLOTrainer(LoggerMixin):
         if self.results is None:
             return {}
 
+        # 新版 ultralytics 不再把 best_fitness/best_epoch 挂在 train() 的返回值上：
+        # best_fitness 记录在 trainer 上，best_epoch 需从 results.csv 反查。
+        trainer = getattr(self.model, "trainer", None)
         metrics = {
-            "best_fitness": getattr(self.results, "best_fitness", None),
-            "best_epoch": getattr(self.results, "best_epoch", None),
+            "best_fitness": getattr(trainer, "best_fitness", None),
+            "best_epoch": None,
         }
 
         # 添加结果目录和模型路径
         if hasattr(self.results, "save_dir"):
             save_dir = Path(self.results.save_dir)
             metrics["save_dir"] = str(save_dir)
+            metrics["best_epoch"] = self._get_best_epoch(save_dir)
 
             # 构建最佳模型和最后模型的完整路径
             best_model = save_dir / "weights" / "best.pt"
@@ -233,6 +237,27 @@ class YOLOTrainer(LoggerMixin):
                 metrics["last_model"] = str(last_model)
 
         return metrics
+
+    @staticmethod
+    def _get_best_epoch(save_dir: Path) -> Optional[int]:
+        """从 results.csv 反查最佳 epoch（fitness = 0.1*mAP50 + 0.9*mAP50-95）。"""
+        import csv
+
+        results_csv = save_dir / "results.csv"
+        if not results_csv.exists():
+            return None
+
+        best_epoch, best_fitness = None, -float("inf")
+        with open(results_csv, newline="") as f:
+            for row in csv.DictReader(f):
+                try:
+                    epoch = int(float(row["epoch"]))
+                    fitness = 0.1 * float(row["metrics/mAP50(B)"]) + 0.9 * float(row["metrics/mAP50-95(B)"])
+                except (KeyError, ValueError):
+                    continue
+                if fitness > best_fitness:
+                    best_epoch, best_fitness = epoch, fitness
+        return best_epoch
 
     def export(self, format: str = "onnx", **kwargs) -> str:
         """导出模型

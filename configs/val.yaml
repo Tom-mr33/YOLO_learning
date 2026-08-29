@@ -2,7 +2,7 @@
 
 # 模型配置
 model:
-  weights: runs/train/exp/weights/best.pt  # 模型权重路径
+  weights: runs/detect/runs/train/exp/weights/best.pt  # 模型权重路径
 
 # 数据配置
 data:
