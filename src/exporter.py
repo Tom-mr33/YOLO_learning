@@ -58,13 +58,14 @@ class YOLOExporter(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("export", {}).get("project", "export")
+        project = self.config.get("export", {}).get("project", "export")
         name = self.config.get("export", {}).get("name", "exp")
+        log_dir = Path("runs") / project / name
         ensure_dir(log_dir)
-        setup_logger(
+        self._logger = setup_logger(
             name="exporter",
             level="info",
-            log_dir=str(Path(log_dir) / name),
+            log_dir=str(log_dir),
         )
 
     def _build_model(self) -> None:

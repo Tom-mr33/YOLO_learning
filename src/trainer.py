@@ -49,13 +49,14 @@ class YOLOTrainer(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("train", {}).get("project", "train")
+        project = self.config.get("train", {}).get("project", "train")
         name = self.config.get("train", {}).get("name", "exp")
+        log_dir = Path("runs") / project / name
         ensure_dir(log_dir)
-        setup_logger(
+        self._logger = setup_logger(
             name="trainer",
             level="info",
-            log_dir=str(Path(log_dir) / name),
+            log_dir=str(log_dir),
         )
 
     def _validate_config(self) -> None:

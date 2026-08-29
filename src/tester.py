@@ -46,13 +46,14 @@ class YOLOTester(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("test", {}).get("project", "test")
+        project = self.config.get("test", {}).get("project", "test")
         name = self.config.get("test", {}).get("name", "exp")
+        log_dir = Path("runs") / project / name
         ensure_dir(log_dir)
-        setup_logger(
+        self._logger = setup_logger(
             name="tester",
             level="info",
-            log_dir=str(Path(log_dir) / name),
+            log_dir=str(log_dir),
         )
 
     def _build_model(self) -> None:
