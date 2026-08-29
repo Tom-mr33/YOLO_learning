@@ -2,11 +2,11 @@
 
 # 模型配置
 model:
-  weights: runs/train/exp/weights/best.pt  # 模型权重路径
+  weights: runs/detect/train/exp/weights/best.pt  # 模型权重路径
 
 # 导出参数
 export:
-  project: runs/export      # 项目输出目录
+  project: export          # 项目输出目录
   name: exp                 # 实验名称
   imgsz: 640                # 输入图片尺寸
   half: false               # 是否使用半精度

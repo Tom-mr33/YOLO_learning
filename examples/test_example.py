@@ -25,9 +25,9 @@ def example_image_test():
 
     # 测试图片
     # 注意：需要先准备测试图片
-    # results = tester.test_image("path/to/image.jpg")
+    results = tester.test_image("data/coco128/images/train2017/000000000030.jpg")
 
-    print("请修改代码中的图片路径后运行")
+    # print("请修改代码中的图片路径后运行")
 
 
 def example_video_test():
@@ -44,7 +44,7 @@ def example_video_test():
             "conf": 0.25,
             "iou": 0.45,
             "device": 0,
-            "project": "runs/test",
+            "project": "test",
             "name": "video_test",
             "save": True,
         },
@@ -69,7 +69,7 @@ def example_camera_test():
             "conf": 0.25,
             "iou": 0.45,
             "device": 0,
-            "project": "runs/test",
+            "project": "test",
             "name": "camera_test",
             "view_img": True,  # 显示图片
         },
@@ -89,26 +89,26 @@ def example_batch_test():
 
     config = {
         "model": {"weights": "yolov8n.pt"},
-        "data": {"source": "data/images"},  # 修改为你的图片目录
+        "data": {"source": "data/coco128/images/train2017"},  # 修改为你的图片目录
         "test": {
             "imgsz": 640,
             "conf": 0.25,
             "iou": 0.45,
             "device": 0,
-            "project": "runs/test",
+            "project": "test",
             "name": "batch_test",
             "save": True,
         },
     }
 
     tester = YOLOTester(config)
-    # results = tester.test()
-    # summary = tester.get_summary()
+    results = tester.test()
+    summary = tester.get_summary()
 
-    # print(f"处理图片数: {summary.get('total_images', 0)}")
-    # print(f"检测目标数: {summary.get('total_detections', 0)}")
+    print(f"处理图片数: {summary.get('total_images', 0)}")
+    print(f"检测目标数: {summary.get('total_detections', 0)}")
 
-    print("请修改代码中的图片目录后运行")
+    # print("请修改代码中的图片目录后运行")
 
 
 def main():

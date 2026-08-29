@@ -46,7 +46,7 @@ class YOLOEvaluator(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("val", {}).get("project", "runs/val")
+        log_dir = self.config.get("val", {}).get("project", "val")
         name = self.config.get("val", {}).get("name", "exp")
         ensure_dir(log_dir)
         setup_logger(
@@ -96,7 +96,7 @@ class YOLOEvaluator(LoggerMixin):
             "iou": val_config.get("iou", 0.6),
             "device": val_config.get("device", 0),
             "workers": val_config.get("workers", 8),
-            "project": val_config.get("project", "runs/val"),
+            "project": val_config.get("project", "val"),
             "name": val_config.get("name", "exp"),
             "plots": True,  # 始终生成图表
             "save_json": True,  # 保存 JSON 结果

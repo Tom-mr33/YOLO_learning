@@ -46,7 +46,7 @@ class YOLOValidator(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("val", {}).get("project", "runs/val")
+        log_dir = self.config.get("val", {}).get("project", "val")
         name = self.config.get("val", {}).get("name", "exp")
         ensure_dir(log_dir)
         setup_logger(
@@ -86,7 +86,7 @@ class YOLOValidator(LoggerMixin):
             "max_det": val_config.get("max_det", 300),
             "device": val_config.get("device", 0),
             "workers": val_config.get("workers", 8),
-            "project": val_config.get("project", "runs/val"),
+            "project": val_config.get("project", "val"),
             "name": val_config.get("name", "exp"),
             "exist_ok": val_config.get("exist_ok", False),
             "half": val_config.get("half", False),

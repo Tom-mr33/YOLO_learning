@@ -49,7 +49,7 @@ class YOLOTrainer(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("train", {}).get("project", "runs/train")
+        log_dir = self.config.get("train", {}).get("project", "train")
         name = self.config.get("train", {}).get("name", "exp")
         ensure_dir(log_dir)
         setup_logger(
@@ -129,7 +129,7 @@ class YOLOTrainer(LoggerMixin):
             "cache": train_config.get("cache", False),
             "device": train_config.get("device", 0),
             "workers": train_config.get("workers", 8),
-            "project": train_config.get("project", "runs/train"),
+            "project": train_config.get("project", "train"),
             "name": train_config.get("name", "exp"),
             "exist_ok": train_config.get("exist_ok", False),
             "pretrained": train_config.get("pretrained", True),

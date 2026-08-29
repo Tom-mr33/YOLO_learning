@@ -318,14 +318,14 @@ plotter = CurvePlotter()
 
 # 绘制训练曲线
 plotter.plot_training_curves(
-    results_csv="runs/train/exp/results.csv",
+    results_csv="runs/detect/train/exp/results.csv",
     output_dir="runs/curves",
     experiment_name="my_experiment",
 )
 
 # 绘制学习率曲线
 plotter.plot_learning_rate(
-    results_csv="runs/train/exp/results.csv",
+    results_csv="runs/detect/train/exp/results.csv",
     output_dir="runs/curves",
     experiment_name="my_experiment",
 )
@@ -333,8 +333,8 @@ plotter.plot_learning_rate(
 # 绘制多实验对比
 plotter.plot_comparison(
     results_dict={
-        "exp1": "runs/train/exp1/results.csv",
-        "exp2": "runs/train/exp2/results.csv",
+        "exp1": "runs/detect/train/exp1/results.csv",
+        "exp2": "runs/detect/train/exp2/results.csv",
     },
     output_dir="runs/curves",
     metric="metrics/mAP50(B)",
@@ -468,7 +468,7 @@ train:
   lr0: 0.01                 # 初始学习率
   device: 0                 # 训练设备
   workers: 8                # 数据加载线程数
-  project: runs/train       # 项目输出目录
+  project: train           # 项目输出目录
   name: exp                 # 实验名称
 ```
 
@@ -476,7 +476,7 @@ train:
 
 ```yaml
 model:
-  weights: runs/train/exp/weights/best.pt  # 模型权重路径
+  weights: runs/detect/train/exp/weights/best.pt  # 模型权重路径
 
 data:
   name: coco128.yaml        # 数据集配置文件
@@ -487,7 +487,7 @@ val:
   conf: 0.001               # 置信度阈值
   iou: 0.6                  # NMS IoU 阈值
   device: 0                 # 验证设备
-  project: runs/val         # 项目输出目录
+  project: val             # 项目输出目录
   name: exp                 # 实验名称
 ```
 
@@ -495,7 +495,7 @@ val:
 
 ```yaml
 model:
-  weights: runs/train/exp/weights/best.pt  # 模型权重路径
+  weights: runs/detect/train/exp/weights/best.pt  # 模型权重路径
 
 data:
   source: data/images       # 测试源路径
@@ -505,7 +505,7 @@ test:
   conf: 0.25                # 置信度阈值
   iou: 0.45                 # NMS IoU 阈值
   device: 0                 # 测试设备
-  project: runs/test        # 项目输出目录
+  project: test            # 项目输出目录
   name: exp                 # 实验名称
 ```
 

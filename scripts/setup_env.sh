@@ -163,9 +163,9 @@ fi
 echo ""
 info "创建项目目录..."
 mkdir -p data
-mkdir -p runs/train
-mkdir -p runs/val
-mkdir -p runs/test
+mkdir -p runs/detect/train
+mkdir -p runs/detect/val
+mkdir -p runs/detect/test
 mkdir -p weights/pretrained
 mkdir -p weights/trained
 

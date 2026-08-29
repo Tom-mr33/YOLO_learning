@@ -39,7 +39,7 @@ train:
   cache: false              # 缓存图片（ram/disk/false）
   device: 0                 # 训练设备（0 表示 GPU 0，cpu 表示 CPU）
   workers: 8                # 数据加载线程数
-  project: runs/train       # 项目输出目录
+  project: train           # 项目输出目录
   name: exp                 # 实验名称
   exist_ok: false           # 覆盖现有实验
   pretrained: true          # 使用预训练权重

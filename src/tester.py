@@ -46,7 +46,7 @@ class YOLOTester(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("test", {}).get("project", "runs/test")
+        log_dir = self.config.get("test", {}).get("project", "test")
         name = self.config.get("test", {}).get("name", "exp")
         ensure_dir(log_dir)
         setup_logger(
@@ -81,7 +81,7 @@ class YOLOTester(LoggerMixin):
             "save_conf": test_config.get("save_conf", False),
             "save_crop": test_config.get("save_crop", False),
             "save": test_config.get("save", True),
-            "project": test_config.get("project", "runs/test"),
+            "project": test_config.get("project", "test"),
             "name": test_config.get("name", "exp"),
             "exist_ok": test_config.get("exist_ok", False),
             "half": test_config.get("half", False),

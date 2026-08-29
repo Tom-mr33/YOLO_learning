@@ -2,7 +2,7 @@
 
 # 模型配置
 model:
-  weights: runs/train/exp/weights/best.pt  # 模型权重路径
+  weights: yolov8n.pt  # 模型权重路径
 
 # 数据配置
 data:
@@ -21,7 +21,7 @@ test:
   save_conf: false          # 保存置信度
   save_crop: false          # 保存裁剪结果
   save: true                # 保存检测结果
-  project: runs/test        # 项目输出目录
+  project: test            # 项目输出目录
   name: exp                 # 实验名称
   exist_ok: false           # 覆盖现有实验
   half: false               # 半精度推理

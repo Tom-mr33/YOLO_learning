@@ -48,7 +48,7 @@ def example_custom_weights():
             "conf": 0.001,
             "iou": 0.6,
             "device": 0,
-            "project": "runs/val",
+            "project": "val",
             "name": "custom_val",
         },
     }
@@ -77,7 +77,7 @@ def example_batch_validation():
                 "batch": 32,
                 "imgsz": 640,
                 "device": 0,
-                "project": "runs/val",
+                "project": "val",
                 "name": f"batch_{model_name.split('.')[0]}",
             },
         }
