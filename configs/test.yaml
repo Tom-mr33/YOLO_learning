@@ -6,7 +6,7 @@ model:
 
 # 数据配置
 data:
-  source: C:/YOLO_learning/data/coco128/images/train2017  # 测试图片/视频路径
+  source: data/coco128/images/train2017  # 测试图片/视频路径
   # 支持: 图片路径、视频路径、图片目录、摄像头编号、URL
 
 # 测试参数
