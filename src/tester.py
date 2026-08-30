@@ -12,7 +12,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.utils.logger import LoggerMixin, setup_logger
-from tools.utils.helpers import load_yaml, ensure_dir, timer
+from tools.utils.helpers import load_yaml, ensure_dir, timer, resolve_run_name, resolve_model_name
 
 
 class YOLOTester(LoggerMixin):
@@ -46,9 +46,7 @@ class YOLOTester(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        project = self.config.get("test", {}).get("project", "test")
-        name = self.config.get("test", {}).get("name", "exp")
-        log_dir = Path("runs") / project / name
+        log_dir = Path("runs") / "logs"
         ensure_dir(log_dir)
         self._logger = setup_logger(
             name="tester",
@@ -71,6 +69,14 @@ class YOLOTester(LoggerMixin):
         test_config = self.config.get("test", {})
         data_config = self.config.get("data", {})
 
+        # 自动生成实验名（<模型>_<日期>），config 的 name 可手动覆盖
+        model_config = self.config.get("model", {})
+        weights = model_config.get("weights", "yolov8n.pt")
+        run_name = resolve_run_name(
+            test_config.get("name"),
+            resolve_model_name(weights),
+        )
+
         args = {
             "source": data_config.get("source", "data/images"),
             "imgsz": test_config.get("imgsz", 640),
@@ -83,7 +89,7 @@ class YOLOTester(LoggerMixin):
             "save_crop": test_config.get("save_crop", False),
             "save": test_config.get("save", True),
             "project": test_config.get("project", "test"),
-            "name": test_config.get("name", "exp"),
+            "name": run_name,
             "exist_ok": test_config.get("exist_ok", False),
             "half": test_config.get("half", False),
             "show_labels": test_config.get("show_labels", True),

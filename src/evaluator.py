@@ -12,7 +12,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.utils.logger import LoggerMixin, setup_logger
-from tools.utils.helpers import load_yaml, ensure_dir, timer
+from tools.utils.helpers import load_yaml, ensure_dir, timer, resolve_run_name, resolve_model_name
 
 
 class YOLOEvaluator(LoggerMixin):
@@ -46,9 +46,7 @@ class YOLOEvaluator(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        project = self.config.get("val", {}).get("project", "val")
-        name = self.config.get("val", {}).get("name", "exp")
-        log_dir = Path("runs") / project / name
+        log_dir = Path("runs") / "logs"
         ensure_dir(log_dir)
         self._logger = setup_logger(
             name="evaluator",
@@ -89,6 +87,14 @@ class YOLOEvaluator(LoggerMixin):
             if config_path.exists():
                 data_yaml = str(config_path)
 
+        # 自动生成实验名（<模型>_<日期>），config 的 name 可手动覆盖
+        model_config = self.config.get("model", {})
+        weights = model_config.get("weights", "yolov8n.pt")
+        run_name = resolve_run_name(
+            val_config.get("name"),
+            resolve_model_name(weights),
+        )
+
         args = {
             "data": data_yaml,
             "batch": val_config.get("batch", 32),
@@ -98,7 +104,7 @@ class YOLOEvaluator(LoggerMixin):
             "device": val_config.get("device", 0),
             "workers": val_config.get("workers", 8),
             "project": val_config.get("project", "val"),
-            "name": val_config.get("name", "exp"),
+            "name": run_name,
             "plots": True,  # 始终生成图表
             "save_json": True,  # 保存 JSON 结果
             "verbose": val_config.get("verbose", True),

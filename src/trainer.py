@@ -12,7 +12,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.utils.logger import LoggerMixin, setup_logger
-from tools.utils.helpers import load_yaml, ensure_dir, timer, get_gpu_info
+from tools.utils.helpers import load_yaml, ensure_dir, timer, get_gpu_info, resolve_run_name
 
 
 class YOLOTrainer(LoggerMixin):
@@ -49,9 +49,7 @@ class YOLOTrainer(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        project = self.config.get("train", {}).get("project", "train")
-        name = self.config.get("train", {}).get("name", "exp")
-        log_dir = Path("runs") / project / name
+        log_dir = Path("runs") / "logs"
         ensure_dir(log_dir)
         self._logger = setup_logger(
             name="trainer",
@@ -106,6 +104,16 @@ class YOLOTrainer(LoggerMixin):
             if config_path.exists():
                 data_yaml = str(config_path)
 
+        # 自动生成实验名（<数据集>_<模型>_e<轮数>_<日期>），config 的 name 可手动覆盖
+        model_config = self.config.get("model", {})
+        model_name = model_config.get("name", "yolov8n.pt")
+        run_name = resolve_run_name(
+            train_config.get("name"),
+            Path(data_yaml).stem,
+            Path(model_name).stem,
+            f"e{train_config.get('epochs', 50)}",
+        )
+
         # 合并所有参数
         args = {
             "data": data_yaml,
@@ -131,7 +139,7 @@ class YOLOTrainer(LoggerMixin):
             "device": train_config.get("device", 0),
             "workers": train_config.get("workers", 8),
             "project": train_config.get("project", "train"),
-            "name": train_config.get("name", "exp"),
+            "name": run_name,
             "exist_ok": train_config.get("exist_ok", False),
             "pretrained": train_config.get("pretrained", True),
             "optimizer": train_config.get("optimizer", "SGD"),
