@@ -58,7 +58,8 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-data/
+/data/
+configs/data/
 runs/
 weights/
 *.onnx
