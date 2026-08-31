@@ -249,7 +249,7 @@ class YOLOTrainer(LoggerMixin):
 
     @staticmethod
     def _get_best_epoch(save_dir: Path) -> Optional[int]:
-        """从 results.csv 反查最佳 epoch（fitness = 0.1*mAP50 + 0.9*mAP50-95）。"""
+        """从 results.csv 反查最佳 epoch（fitness = mAP50-95，与当前 Ultralytics 行为一致）。"""
         import csv
 
         results_csv = save_dir / "results.csv"
@@ -261,7 +261,7 @@ class YOLOTrainer(LoggerMixin):
             for row in csv.DictReader(f):
                 try:
                     epoch = int(float(row["epoch"]))
-                    fitness = 0.1 * float(row["metrics/mAP50(B)"]) + 0.9 * float(row["metrics/mAP50-95(B)"])
+                    fitness = float(row["metrics/mAP50-95(B)"])
                 except (KeyError, ValueError):
                     continue
                 if fitness > best_fitness:
