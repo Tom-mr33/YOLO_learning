@@ -8,13 +8,7 @@ model:
 
 # 数据配置
 data:
-  name: mask.yaml           # 数据集配置文件路径
-  path: data/mask-wearing   # 数据集根目录
-  train: train/images       # 训练集相对路径
-  val: valid/images         # 验证集相对路径
-  test: test/images         # 测试集相对路径（可选）
-  nc: 2                     # 类别数量
-  names: []                 # 类别名称列表（留空则从文件读取）
+  name: pet.yaml           # 数据集配置文件路径
 
 # 训练超参数
 train:

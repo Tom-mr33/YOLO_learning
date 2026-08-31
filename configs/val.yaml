@@ -2,11 +2,11 @@
 
 # 模型配置
 model:
-  weights: runs/detect/train/mask_yolov8n_e50_20260830/weights/best.pt  # 模型权重路径（自动命名规则下的训练输出）
+  weights: runs/detect/train/pet_yolov8n_e50_20260831-2/weights/best.pt  # 模型权重路径（自动命名规则下的训练输出）
 
 # 数据配置
 data:
-  name: mask.yaml        # 数据集配置文件路径
+  name: pet.yaml        # 数据集配置文件路径
 
 # 验证参数
 val:
@@ -39,4 +39,4 @@ val:
   classes: null             # 过滤类别
   retina_masks: false       # 高分辨率掩码
   boxes: true               # 显示边界框
-  split: val                # 数据集分割（val/test）
+  split: test                # 数据集分割（val/test）

@@ -2,11 +2,11 @@
 
 # 模型配置
 model:
-  weights: runs/detect/train/mask_yolov8n_e50_20260830/weights/best.pt  # 模型权重路径
+  weights: runs/detect/train/pet_yolov8n_e50_20260831-2/weights/best.pt  # 模型权重路径
 
 # 数据配置
 data:
-  source: data/mask-wearing/test/images   # 口罩测试集图片
+  source: data/try_set_dataset_1/test/images   # 宠物测试集图片
   # 支持: 图片路径、视频路径、图片目录、摄像头编号、URL
 
 # 测试参数
