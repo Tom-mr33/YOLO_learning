@@ -196,9 +196,9 @@ def main():
     print("快速开始完成！")
     print("=" * 60)
     print("\n输出目录:")
-    print(f"  训练结果: runs/train/")
-    print(f"  验证结果: runs/val/")
-    print(f"  测试结果: runs/test/")
+    print(f"  训练结果: runs/detect/train/")
+    print(f"  验证结果: runs/detect/val/")
+    print(f"  测试结果: runs/detect/test/")
     print(f"  评估报告: runs/evaluation_report.json")
 
 

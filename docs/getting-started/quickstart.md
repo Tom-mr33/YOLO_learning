@@ -185,7 +185,7 @@ from tools.visualization.curves import CurvePlotter
 
 plotter = CurvePlotter()
 plotter.plot_training_curves(
-    results_csv="runs/train/exp/results.csv",
+    results_csv="runs/detect/train/exp/results.csv",
     output_dir="runs/curves",
     experiment_name="my_experiment"
 )
@@ -198,7 +198,7 @@ from tools.visualization.confusion import ConfusionMatrixPlotter
 
 plotter = ConfusionMatrixPlotter()
 plotter.plot_from_results(
-    results_dir="runs/val/exp",
+    results_dir="runs/detect/val/exp",
     output_dir="runs/confusion"
 )
 ```

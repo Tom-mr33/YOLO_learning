@@ -12,7 +12,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from tools.utils.logger import LoggerMixin, setup_logger
-from tools.utils.helpers import load_yaml, ensure_dir, timer, get_gpu_info
+from tools.utils.helpers import load_yaml, ensure_dir, timer, get_gpu_info, resolve_run_name
 
 
 class YOLOTrainer(LoggerMixin):
@@ -49,13 +49,12 @@ class YOLOTrainer(LoggerMixin):
 
     def _setup_logging(self) -> None:
         """设置日志"""
-        log_dir = self.config.get("train", {}).get("project", "runs/train")
-        name = self.config.get("train", {}).get("name", "exp")
+        log_dir = Path("runs") / "logs"
         ensure_dir(log_dir)
-        setup_logger(
+        self._logger = setup_logger(
             name="trainer",
             level="info",
-            log_dir=str(Path(log_dir) / name),
+            log_dir=str(log_dir),
         )
 
     def _validate_config(self) -> None:
@@ -105,6 +104,16 @@ class YOLOTrainer(LoggerMixin):
             if config_path.exists():
                 data_yaml = str(config_path)
 
+        # 自动生成实验名（<数据集>_<模型>_e<轮数>_<日期>），config 的 name 可手动覆盖
+        model_config = self.config.get("model", {})
+        model_name = model_config.get("name", "yolov8n.pt")
+        run_name = resolve_run_name(
+            train_config.get("name"),
+            Path(data_yaml).stem,
+            Path(model_name).stem,
+            f"e{train_config.get('epochs', 50)}",
+        )
+
         # 合并所有参数
         args = {
             "data": data_yaml,
@@ -129,8 +138,8 @@ class YOLOTrainer(LoggerMixin):
             "cache": train_config.get("cache", False),
             "device": train_config.get("device", 0),
             "workers": train_config.get("workers", 8),
-            "project": train_config.get("project", "runs/train"),
-            "name": train_config.get("name", "exp"),
+            "project": train_config.get("project", "train"),
+            "name": run_name,
             "exist_ok": train_config.get("exist_ok", False),
             "pretrained": train_config.get("pretrained", True),
             "optimizer": train_config.get("optimizer", "SGD"),
@@ -213,15 +222,19 @@ class YOLOTrainer(LoggerMixin):
         if self.results is None:
             return {}
 
+        # 新版 ultralytics 不再把 best_fitness/best_epoch 挂在 train() 的返回值上：
+        # best_fitness 记录在 trainer 上，best_epoch 需从 results.csv 反查。
+        trainer = getattr(self.model, "trainer", None)
         metrics = {
-            "best_fitness": getattr(self.results, "best_fitness", None),
-            "best_epoch": getattr(self.results, "best_epoch", None),
+            "best_fitness": getattr(trainer, "best_fitness", None),
+            "best_epoch": None,
         }
 
         # 添加结果目录和模型路径
         if hasattr(self.results, "save_dir"):
             save_dir = Path(self.results.save_dir)
             metrics["save_dir"] = str(save_dir)
+            metrics["best_epoch"] = self._get_best_epoch(save_dir)
 
             # 构建最佳模型和最后模型的完整路径
             best_model = save_dir / "weights" / "best.pt"
@@ -233,6 +246,27 @@ class YOLOTrainer(LoggerMixin):
                 metrics["last_model"] = str(last_model)
 
         return metrics
+
+    @staticmethod
+    def _get_best_epoch(save_dir: Path) -> Optional[int]:
+        """从 results.csv 反查最佳 epoch（fitness = mAP50-95，与当前 Ultralytics 行为一致）。"""
+        import csv
+
+        results_csv = save_dir / "results.csv"
+        if not results_csv.exists():
+            return None
+
+        best_epoch, best_fitness = None, -float("inf")
+        with open(results_csv, newline="") as f:
+            for row in csv.DictReader(f):
+                try:
+                    epoch = int(float(row["epoch"]))
+                    fitness = float(row["metrics/mAP50-95(B)"])
+                except (KeyError, ValueError):
+                    continue
+                if fitness > best_fitness:
+                    best_epoch, best_fitness = epoch, fitness
+        return best_epoch
 
     def export(self, format: str = "onnx", **kwargs) -> str:
         """导出模型

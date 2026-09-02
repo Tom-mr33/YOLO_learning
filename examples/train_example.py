@@ -50,7 +50,7 @@ def example_custom_config():
             "batch": 16,
             "imgsz": 640,
             "device": 0,
-            "project": "runs/train",
+            "project": "train",
             "name": "custom_exp",
         },
     }
@@ -99,7 +99,7 @@ def example_model_comparison():
                 "batch": 16,
                 "imgsz": 640,
                 "device": 0,
-                "project": "runs/train",
+                "project": "train",
                 "name": f"compare_{model_name.split('.')[0]}",
             },
         }

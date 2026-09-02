@@ -149,9 +149,9 @@ echo.
 echo [信息] 创建项目目录...
 if not exist "data" mkdir data
 if not exist "runs" mkdir runs
-if not exist "runs\train" mkdir runs\train
-if not exist "runs\val" mkdir runs\val
-if not exist "runs\test" mkdir runs\test
+if not exist "runs\detect\train" mkdir runs\detect\train
+if not exist "runs\detect\val" mkdir runs\detect\val
+if not exist "runs\detect\test" mkdir runs\detect\test
 if not exist "weights" mkdir weights
 if not exist "weights\pretrained" mkdir weights\pretrained
 if not exist "weights\trained" mkdir weights\trained

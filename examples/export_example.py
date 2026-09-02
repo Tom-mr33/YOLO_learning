@@ -22,7 +22,7 @@ def example_onnx_export():
     config = {
         "model": {"weights": "yolov8n.pt"},
         "export": {
-            "project": "runs/export",
+            "project": "export",
             "name": "onnx_export",
         },
     }
@@ -48,7 +48,7 @@ def example_tensorrt_export():
     config = {
         "model": {"weights": "yolov8n.pt"},
         "export": {
-            "project": "runs/export",
+            "project": "export",
             "name": "tensorrt_export",
         },
     }
@@ -78,7 +78,7 @@ def example_openvino_export():
     config = {
         "model": {"weights": "yolov8n.pt"},
         "export": {
-            "project": "runs/export",
+            "project": "export",
             "name": "openvino_export",
         },
     }
@@ -105,7 +105,7 @@ def example_all_formats():
     config = {
         "model": {"weights": "yolov8n.pt"},
         "export": {
-            "project": "runs/export",
+            "project": "export",
             "name": "all_formats",
         },
     }

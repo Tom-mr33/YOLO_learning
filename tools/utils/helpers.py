@@ -6,6 +6,7 @@
 import os
 import time
 import yaml
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, Union
 from contextlib import contextmanager
@@ -280,6 +281,46 @@ def format_dict(d: Dict[str, Any], indent: int = 0) -> str:
         else:
             lines.append(f"{prefix}{key}: {value}")
     return "\n".join(lines)
+
+
+def resolve_run_name(custom: Optional[str], *parts) -> str:
+    """解析实验名
+
+    Args:
+        custom: 配置中手动指定的实验名（None/空则自动生成）
+        *parts: 参与自动命名的片段（如数据集名、模型名、轮数等）
+
+    Returns:
+        实验名字符串
+
+    规则：custom 优先；否则 parts 拼接，若结果不含今日日期则自动补上，
+    保证每天运行互不覆盖、又携带语义信息。
+    """
+    if custom:
+        return str(custom)
+    joined = "_".join(str(p) for p in parts if p)
+    today = datetime.now().strftime("%Y%m%d")
+    if not joined:
+        return today
+    return joined if today in joined else f"{joined}_{today}"
+
+
+def resolve_model_name(weights: str) -> str:
+    """从权重路径提取模型身份
+
+    Args:
+        weights: 模型权重路径
+
+    Returns:
+        模型身份字符串
+
+    训练产出的权重（runs/detect/train/<实验名>/weights/best.pt）取其目录名
+    （已含数据集/模型/轮数/日期）；预训练权重直接取文件名。
+    """
+    path = Path(weights)
+    if path.parent.name == "weights":
+        return path.parent.parent.name
+    return path.stem
 
 
 if __name__ == "__main__":
